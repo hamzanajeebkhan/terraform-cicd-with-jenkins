@@ -12,7 +12,7 @@ pipeline {
                 checkout scm
             }
         }
-
+/*
         stage('Install Terraform') {
             steps {
                 
@@ -37,7 +37,7 @@ pipeline {
                 '''
             }
         }
-
+*/
         stage('Run Terraform Init') {
             steps {
                 sh '''
