@@ -16,7 +16,7 @@ pipeline {
         stage('Install Terraform') {
             steps {
                 
-                sh 'apt-get update && sudo apt-get install -y gnupg software-properties-common'
+                sh 'apt-get update && apt-get install -y gnupg software-properties-common'
                 sh '''
                 wget -O- https://apt.releases.hashicorp.com/gpg | \
                     gpg --dearmor | \
