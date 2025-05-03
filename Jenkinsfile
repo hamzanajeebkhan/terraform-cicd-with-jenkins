@@ -38,7 +38,7 @@ pipeline {
             when { environment name: 'DRY_RUN', value: 'false'}
             steps {
                 script {
-                    sh 'terraform ${params.Terraform_Command} -auto-approve'
+                    sh "terraform ${params.Terraform_Command} -auto-approve"
                 }
             }
         }
