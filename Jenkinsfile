@@ -1,15 +1,20 @@
 pipeline {
     agent any
 
+    parameters {
+        choice choices: ['apply', 'destroy'], description: 'Select the choice to apply or destroy terraform infrastructure', name: 'Terraform Command'
+        booleanParam defaultValue: true, description: 'Use this to see terraform plan only.', name: 'dry-run'
+    }
+
     environment {
         AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+        DRY_RUN = "${params.dry-run}"
     }
 
     tools {
         terraform 'Terraform'
     }
-
 
     stages {
         stage('Checkout') {
@@ -17,32 +22,6 @@ pipeline {
                 checkout scm
             }
         }
-/*
-        stage('Install Terraform') {
-            steps {
-                
-                sh 'apt-get update && apt-get install -y gnupg software-properties-common'
-                sh '''
-                wget -O- https://apt.releases.hashicorp.com/gpg | \
-                    gpg --dearmor | \
-                    tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null
-                '''
-                sh 'apt update'
-                sh 'apt-get install terraform'
-                
-            }
-        }
-        
-        stage('Install AWS') {
-            steps {
-                sh '''
-                    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-                    unzip awscliv2.zip
-                    ./aws/install
-                '''
-            }
-        }
-*/
         stage('Run Terraform Init') {
             steps {
                 sh 'terraform init'
@@ -56,6 +35,7 @@ pipeline {
         }
         
         stage('Run Terraform Apply / Destroy') {
+            when { environment name: 'DRY_RUN', value: 'false'}
             steps {
                 sh 'echo "Testing"'
             }
