@@ -37,7 +37,9 @@ pipeline {
         stage('Run Terraform Apply / Destroy') {
             when { environment name: 'DRY_RUN', value: 'false'}
             steps {
-                sh 'terraform ${params.Terraform_Command} -auto-approve'
+                script {
+                    sh 'terraform ${params.Terraform_Command} -auto-approve'
+                }
             }
         }
         
