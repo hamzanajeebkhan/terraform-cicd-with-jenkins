@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-        choice choices: ['apply', 'destroy'], description: 'Select the choice to apply or destroy terraform infrastructure', name: 'Terraform Command'
+        choice choices: ['apply', 'destroy'], description: 'Select the choice to apply or destroy terraform infrastructure', name: 'Terraform_Command'
         booleanParam defaultValue: true, description: 'Use this to see terraform plan only.', name: 'dryRun'
     }
 
@@ -37,7 +37,7 @@ pipeline {
         stage('Run Terraform Apply / Destroy') {
             when { environment name: 'DRY_RUN', value: 'false'}
             steps {
-                sh 'echo "Testing"'
+                sh 'terraform ${params.Terraform_Command} -auto-approve'
             }
         }
         
