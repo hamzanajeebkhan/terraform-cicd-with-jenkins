@@ -3,13 +3,13 @@ pipeline {
 
     parameters {
         choice choices: ['apply', 'destroy'], description: 'Select the choice to apply or destroy terraform infrastructure', name: 'Terraform Command'
-        booleanParam defaultValue: true, description: 'Use this to see terraform plan only.', name: 'dry-run'
+        booleanParam defaultValue: true, description: 'Use this to see terraform plan only.', name: 'dryRun'
     }
 
     environment {
         AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
-        DRY_RUN = "${params.dry-run}"
+        DRY_RUN = "${params.dryRun}"
     }
 
     tools {
