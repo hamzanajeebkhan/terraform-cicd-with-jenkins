@@ -40,25 +40,19 @@ pipeline {
 */
         stage('Run Terraform Init') {
             steps {
-                sh '''
-                    terraform init
-                '''
+                sh 'terraform init'
             }
         }
 
         stage('Run Terraform Plan') {
             steps {
-                sh '''
-                    terraform plan
-                '''
+                sh 'terraform plan'
             }
         }
         
         stage('Run Terraform Apply / Destroy') {
             steps {
-                sh '''
-                echo "Testing"
-                '''
+                sh 'echo "Testing"'
             }
         }
         
